@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tiwut - Download</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --mouse-x: 0;
+            --mouse-y: 0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #0d0d0d;
+            color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 1000px;
+            height: 1000px;
+            background: radial-gradient(circle, rgba(255, 107, 0, 0.25), transparent 60%);
+            border-radius: 50%;
+            transform: translate(calc(-50% + var(--mouse-x) * -40px), calc(-50% + var(--mouse-y) * -40px));
+            filter: blur(100px);
+            opacity: 0.8;
+            transition: transform 0.2s ease-out;
+        }
+
+        .lang-switcher {
+            position: absolute;
+            top: 25px;
+            right: 30px;
+            z-index: 100;
+            display: flex;
+            gap: 8px;
+            background: rgba(30, 30, 30, 0.5);
+            padding: 8px 12px;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .lang-switcher button {
+            background: none;
+            border: none;
+            color: #888;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            padding: 5px;
+            transition: color 0.3s ease;
+        }
+
+        .lang-switcher button:hover {
+            color: #fff;
+        }
+
+        .lang-switcher button.active {
+            color: #ff8c00;
+        }
+
+        main {
+            position: relative;
+            z-index: 10;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(18, 18, 18, 0.6);
+            padding: 50px 60px;
+            border-radius: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            max-width: 600px;
+            width: 90vw;
+            animation: card-fade-in 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        @keyframes card-fade-in {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .content-wrapper > * {
+            opacity: 0;
+            animation: content-slide-in 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        }
+
+        @keyframes content-slide-in {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #fff;
+            transform: translateY(20px);
+            animation-delay: 0.2s;
+        }
+
+        .slogan {
+            font-size: 1.1rem;
+            font-weight: 300;
+            color: #b0b0b0;
+            margin-bottom: 45px;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+            transform: translateY(20px);
+            animation-delay: 0.4s;
+        }
+
+        .download-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            transform: translateY(20px);
+            animation-delay: 0.6s;
+        }
+
+        .download-btn {
+            text-decoration: none;
+            color: #fff;
+            padding: 16px 35px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border: none;
+            background: linear-gradient(45deg, #ff8c00, #ff4500);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .download-btn .platform {
+            display: block;
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .download-btn .file-type {
+            font-size: 0.8rem;
+            font-weight: 300;
+            opacity: 0.8;
+        }
+        
+        .download-btn:hover {
+            transform: translateY(-7px) scale(1.03);
+            box-shadow: 0 10px 35px rgba(255, 107, 0, 0.5);
+        }
+
+        footer {
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+            text-align: center;
+            color: #555;
+            font-size: 0.9rem;
+            z-index: 10;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.8rem;
+            }
+            .slogan {
+                font-size: 1rem;
+            }
+            .download-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            .download-btn {
+                width: 90%;
+                max-width: 320px;
+                padding: 18px 20px;
+            }
+            .container {
+                padding: 40px 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="lang-switcher">
+        <button id="lang-de">DE</button>
+        <button id="lang-en">EN</button>
+        <button id="lang-es">ES</button>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="content-wrapper">
+                <h1>Tiwut</h1>
+                <p class="slogan" data-key="slogan">Die App, die alles verändert. Jetzt herunterladen und durchstarten.</p>
+                <div class="download-buttons">
+                    <a href="https://github.com/tiwut/Tiwut/releases/download/python/setup_Tiwut.exe" class="download-btn" download>
+                        <span class="platform" data-key="downloadWindows">Download für Windows</span>
+                        <span class="file-type">(.exe Installer)</span>
+                    </a>
+                    <a href="https://github.com/tiwut/Tiwut/releases/download/python/Tiwut.apk" class="download-btn" download>
+                        <span class="platform" data-key="downloadAndroid">Download für Android</span>
+                        <span class="file-type" data-key="apkFile">(.apk Datei)</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p data-key="footer">&copy; 2025 Tiwut. Alle Rechte vorbehalten.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const translations = {
+                "de": {
+                    "title": "Tiwut - Download",
+                    "slogan": "Die App, die alles verändert. Jetzt herunterladen und durchstarten.",
+                    "downloadWindows": "Download für Windows",
+                    "downloadAndroid": "Download für Android",
+                    "apkFile": "(.apk Datei)",
+                    "footer": "&copy; 2024 Tiwut. Alle Rechte vorbehalten."
+                },
+                "en": {
+                    "title": "Tiwut - Download",
+                    "slogan": "The app that changes everything. Download now and get started.",
+                    "downloadWindows": "Download for Windows",
+                    "downloadAndroid": "Download for Android",
+                    "apkFile": "(.apk file)",
+                    "footer": "&copy; 2024 Tiwut. All rights reserved."
+                },
+                "es": {
+                    "title": "Tiwut - Descargar",
+                    "slogan": "La aplicación que lo cambia todo. Descárgala ahora y empieza.",
+                    "downloadWindows": "Descargar para Windows",
+                    "downloadAndroid": "Descargar para Android",
+                    "apkFile": "(.apk archivo)",
+                    "footer": "&copy; 2024 Tiwut. Todos los derechos reservados."
+                }
+            };
+
+            const langButtons = {
+                de: document.getElementById('lang-de'),
+                en: document.getElementById('lang-en'),
+                es: document.getElementById('lang-es')
+            };
+
+            const setLanguage = (lang) => {
+                document.documentElement.lang = lang;
+                document.title = translations[lang].title;
+
+                document.querySelectorAll('[data-key]').forEach(el => {
+                    const key = el.dataset.key;
+                    if (translations[lang][key]) {
+                        el.innerHTML = translations[lang][key];
+                    }
+                });
+
+                Object.values(langButtons).forEach(btn => btn.classList.remove('active'));
+                if (langButtons[lang]) {
+                    langButtons[lang].classList.add('active');
+                }
+                
+                localStorage.setItem('tiwut_lang', lang);
+            };
+
+            Object.keys(langButtons).forEach(lang => {
+                if (langButtons[lang]) {
+                    langButtons[lang].addEventListener('click', () => setLanguage(lang));
+                }
+            });
+
+            const savedLang = localStorage.getItem('tiwut_lang');
+            const browserLang = navigator.language.split('-')[0];
+
+            if (savedLang && translations[savedLang]) {
+                setLanguage(savedLang);
+            } else if (translations[browserLang]) {
+                setLanguage(browserLang);
+            } else {
+                setLanguage('en');
+            }
+
+            document.body.addEventListener('mousemove', e => {
+                const { clientX, clientY } = e;
+                const x = (clientX / window.innerWidth) - 0.5;
+                const y = (clientY / window.innerHeight) - 0.5;
+                document.documentElement.style.setProperty('--mouse-x', x);
+                document.documentElement.style.setProperty('--mouse-y', y);
+            });
+        });
+    </script>
+</body>
+</html>
